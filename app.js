@@ -36,3 +36,40 @@ var io = socket.listen(server);
 server.listen(app.get('port'), function () {
   console.log("S³ucham na " + app.get('port'));
 });
+
+var status = null;
+
+// ROUTES 
+app.get('/game', function (req, res) {
+  if (status !== null) {
+    res.render('game');
+  }
+  else {
+    res.redirect('/');
+}
+});
+
+app.get('/', function (req, res) {
+  if (status === null) {
+    res.render('home', {
+      challenges: challenges().select('challengeName')
+    });
+  }
+ else {
+    res.redirect('/game');
+  }
+});
+
+app.post('/', function (req, res) {
+  var zadanie = req.body.challenge;
+  console.log(req.body);
+  var steps = challenges({challengeName: zadanie}).first().steps;
+  status = {
+    actions           : steps,
+    playerLeftName    : null,
+    playerRightName   : null,
+    playerLeftAction  : 0,
+    playerRightAction : 0
+  };
+  res.redirect('/game');
+});
