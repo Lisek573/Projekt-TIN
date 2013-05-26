@@ -73,3 +73,58 @@ app.post('/', function (req, res) {
   };
   res.redirect('/game');
 });
+
+//  SOCKET IO 
+io.sockets.on('connection', function (client) {
+  console.log('Client connected...');
+  if (status.playerLeftName !== null && status.playerRightName !== null) {
+    client.emit('playersLimit', status);
+    client.set('username', 'spectator');
+    client.emit('updateSteps', status);
+  }
+  else { 
+    client.emit('allowJoin');
+  }
+
+  client.on('join', function (username) {
+    // ustawianie nazwy u¿ytkownika/po³¹czenia
+      client.set('username', username);
+      if (status.playerLeftName === null) {
+        status.playerLeftName = username;
+      }
+      else {
+          status.playerRightName = username;
+      } 
+
+      
+      client.emit('updatePlayers', status);
+      client.broadcast.emit('updatePlayers', status);
+
+      if (status.playerLeftName !== null && status.playerRightName !== null){
+      client.emit('updateSteps', status);
+      client.broadcast.emit('updateSteps', status);
+    }
+    });
+
+  client.on('disconnect', function () {
+    client.get('username', function (err, username){
+     if (username !== 'spectator'){
+
+      
+    
+     if (status.playerLeftName === username) {
+      status.playerLeftName = null;
+     }
+
+     if (status.playerRightName === username) {
+      status.playerRightName = null;
+     }
+
+     if (status.playerLeftName === null && status.playerRightName === null) {
+      status = null;
+     }
+      client.broadcast.emit('updatePlayers', status);
+    }
+    });
+  });
+});
