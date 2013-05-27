@@ -71,6 +71,8 @@ app.post('/', function (req, res) {
     playerLeftName    : null,
     playerRightName   : null,
     playerLeftAction  : 0,
+	playerLeftAllow  : 0,
+	playerRightAllow  : 0,
     playerRightAction : 0
   };
   res.redirect('/game');
@@ -83,6 +85,7 @@ io.sockets.on('connection', function (client) {
     client.emit('playersLimit', status);
     client.set('username', 'spectator');
     client.emit('updateSteps', status);
+	client.emit('updateSteps2', status);
   }
   else {
     client.emit('allowJoin');
@@ -128,73 +131,38 @@ io.sockets.on('connection', function (client) {
     }
     });
   });
+   
+  client.on('next-allow', function () {
+    client.get('username', function (err, username) {
+      if (status !== null && status.playerLeftName !== null && status.playerRightName !== null){
+     //console.log(username);
+     if (status.playerLeftName === username && status.playerRightAllow === 1) {
+      status.playerRightAction++;
+	  status.playerRightAllow = 0;
+     }
+	 
+     else if (status.playerRightName === username && status.playerLeftAllow === 1) {
+      status.playerLeftAction++;
+	  status.playerLeftAllow = 0;
+     }
+      client.emit('updateSteps2', status);
+      client.broadcast.emit('updateSteps2', status);
+    }
+    });
+	});
   
     client.on('next', function () {
     client.get('username', function (err, username) {
       if (status !== null && status.playerLeftName !== null && status.playerRightName !== null){
      //console.log(username);
      if (status.playerLeftName === username) {
-      status.playerLeftAction++;
+      status.playerLeftAllow = 1;
      }
      else if (status.playerRightName === username) {
-      status.playerRightAction++;
+      status.playerRightAllow = 1;
      }
       client.emit('updateSteps', status);
       client.broadcast.emit('updateSteps', status);
-    }
-    });
-  });
-});
-//  SOCKET IO 
-io.sockets.on('connection', function (client) {
-  console.log('Client connected...');
-  if (status.playerLeftName !== null && status.playerRightName !== null) {
-    client.emit('playersLimit', status);
-    client.set('username', 'spectator');
-    client.emit('updateSteps', status);
-  }
-  else { 
-    client.emit('allowJoin');
-  }
-
-  client.on('join', function (username) {
-    // ustawianie nazwy u¿ytkownika/po³¹czenia
-      client.set('username', username);
-      if (status.playerLeftName === null) {
-        status.playerLeftName = username;
-      }
-      else {
-          status.playerRightName = username;
-      } 
-
-      
-      client.emit('updatePlayers', status);
-      client.broadcast.emit('updatePlayers', status);
-
-      if (status.playerLeftName !== null && status.playerRightName !== null){
-      client.emit('updateSteps', status);
-      client.broadcast.emit('updateSteps', status);
-    }
-    });
-
-  client.on('disconnect', function () {
-    client.get('username', function (err, username){
-     if (username !== 'spectator'){
-
-      
-    
-     if (status.playerLeftName === username) {
-      status.playerLeftName = null;
-     }
-
-     if (status.playerRightName === username) {
-      status.playerRightName = null;
-     }
-
-     if (status.playerLeftName === null && status.playerRightName === null) {
-      status = null;
-     }
-      client.broadcast.emit('updatePlayers', status);
     }
     });
   });
