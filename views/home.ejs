@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ArtFight - simply do it!</title>
+
+	<link href="/stylesheets/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="hero-unit">
+        <h1>ArtFight</h1>
+        <br>
+        <form name="input" action="/" method="post">
+          <p>Wybierz zbiór zadań:</p>
+          <select name="challenge">
+          <% challenges.forEach(function(challenge){ %>
+            <option value="<%= challenge %>"><%= challenge %></option>
+          <% }) %>
+          </select>
+          <br>
+          <input class="btn" type="submit" value="Submit">
+        </form>  
+      </div>
+      <footer>
+        <p>Paweł Tomaszewski s8147 - Projekt TIN ITN 2013</p>
+      </footer>
+
+    </div>
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+  </body>
+</html>

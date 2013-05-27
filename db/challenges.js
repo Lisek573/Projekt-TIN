@@ -1,5 +1,5 @@
 exports.challenges = [
-	{id: 1, challengeName: 'Zwierzęta', steps: [
+	{id: 1, challengeName: 'Zwierzeta', steps: [
 		'Narysuj kota',
 		'Narysuj psa',
 		'Narysuj lisa',
@@ -15,12 +15,11 @@ exports.challenges = [
 		'Narysuj obraz "Zegary" rysując tylko zegary elektroniczne',
 		'Bądź jak picasso.',
 	]},
-	{id: 4, challengeName: 'Zdjęcia', steps: [
+	{id: 4, challengeName: 'Zdjecia', steps: [
 		'Zrób zdjęcie budynku',
 		'Zrób zdjęcie zwierzęcia',
 		'Zrób zdjęcie jedzenia',
 		'Zrób zdjęcie osoby',
 		'Zrób zdjęcie ubrania',
 	]}
-
 ];
