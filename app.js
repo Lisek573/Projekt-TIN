@@ -85,7 +85,6 @@ io.sockets.on('connection', function (client) {
     client.emit('playersLimit', status);
     client.set('username', 'spectator');
     client.emit('updateSteps', status);
-	client.emit('updateSteps2', status);
   }
   else {
     client.emit('allowJoin');
@@ -107,8 +106,6 @@ io.sockets.on('connection', function (client) {
       if (status.playerLeftName !== null && status.playerRightName !== null){
       client.emit('updateSteps', status);
       client.broadcast.emit('updateSteps', status);
-	  client.emit('updateSteps2', status);
-      client.broadcast.emit('updateSteps2', status);
     }
     });
 

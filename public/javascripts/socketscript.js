@@ -9,12 +9,11 @@
 		$rightName = $('#playerRightName'),
 		$leftStep = $('#stepLeft'),
 		$rightStep = $('#stepRight'),
-		$button = $('#button');
+		$button = $('#button'),
+		$button2 = $('#button2');
 
-
-	//blokada dołączania
 	socket.on('playersLimit', function (status) {
-		alert("Players limit reached! You can not join this game, but you still can watch the progress!");
+		alert("Już nie można dołączyć do gry. Możesz wciąż ją podglądać.");
 		$leftName.empty();
 		$rightName.empty();
 		$button.empty();
@@ -23,14 +22,13 @@
 		$('<h2>',{html: status.playerLeftName}).appendTo($leftName);	
 		$('<h2>',{html: status.playerRightName}).appendTo($rightName);
 	});
-	//dołączanie graczy
+
 	socket.on('allowJoin', function () {
-		var username = prompt("Please enter your name:");
-		username = username ? username : "Someone";
+		var username = prompt("Wpisz swoją ksywkę:");
+		username = username ? username : "Ktokolwiek";
 		socket.emit('join', username);
 	});
 
-	//odświeżanie graczy
 	socket.on('updatePlayers', function (status) {
 		$leftName.empty();
 		$rightName.empty();
@@ -57,7 +55,7 @@
 				$('<p>',{html: status.actions[status.playerLeftAction]}).appendTo($leftStep);
 			}
 			else {
-				$('<p>',{html: 'KONIEC!'}).appendTo($leftStep);
+				$('<p>',{html: 'Wszystkie zadania wykonane. Gratulacje!'}).appendTo($leftStep);
 			}
 		}
 		if (status.playerRightName !== null) {
@@ -65,17 +63,20 @@
 				$('<p>',{html: status.actions[status.playerRightAction]}).appendTo($rightStep);
 			}
 			else {
-				$('<p>',{html: 'KONIEC!'}).appendTo($rightStep);
+				$('<p>',{html: 'Wszystkie zadania wykonane. Gratulacje!'}).appendTo($rightStep);
 			}
 
 		}
 	});
-	//przełączanie na kolejną akcję
+	
 	$('#next').on('click', function () {
+		$button2.empty();
+		$('<h2>',{html: ' <center><button id="next-allow" class="btn btn-warning btn-large">Zezwól na następny ruch</button></center>'}).appendTo($button2);
 		socket.emit('next');
 	});
 	
 	$('#next-allow').on('click', function () {
+		$button2.empty();
 		socket.emit('next-allow');
 	});
 
