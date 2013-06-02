@@ -75,7 +75,7 @@ app.post('/', function (req, res) {
 	playerLeftAvatar : 'http://i40.tinypic.com/2u760rk.jpg',
 	playerRightAllow  : 0,
     playerRightAction : 0,
-	playerRightAvatar : 'http://i40.tinypic.com/2u760rk.jpg'
+	playerRightAvatar : 'http://i40.tinypic.com/2rgm8uc.jpg'
   };
   res.redirect('/game');
 });
