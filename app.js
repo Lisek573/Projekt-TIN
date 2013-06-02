@@ -72,8 +72,10 @@ app.post('/', function (req, res) {
     playerRightName   : null,
     playerLeftAction  : 0,
 	playerLeftAllow  : 0,
+	playerLeftAvatar : 'http://i40.tinypic.com/2u760rk.jpg',
 	playerRightAllow  : 0,
-    playerRightAction : 0
+    playerRightAction : 0,
+	playerRightAvatar : 'http://i40.tinypic.com/2u760rk.jpg'
   };
   res.redirect('/game');
 });
@@ -98,8 +100,6 @@ io.sockets.on('connection', function (client) {
       else {
           status.playerRightName = username;
       }
-
-      
       client.emit('updatePlayers', status);
       client.broadcast.emit('updatePlayers', status);
 
@@ -112,9 +112,6 @@ io.sockets.on('connection', function (client) {
   client.on('disconnect', function () {
     client.get('username', function (err, username){
      if (username !== 'spectator'){
-
-      
-    
      if (status.playerLeftName === username) {
       status.playerLeftName = null;
      }
