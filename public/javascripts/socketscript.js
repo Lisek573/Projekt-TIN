@@ -25,38 +25,39 @@
 
 		$('<p>',{html: "<center>Miłego oglądania</center>"}).appendTo($button);
 		$('<h2>',{html: status.playerLeftName}).appendTo($leftName);	
-		$('<h2>',{html: '<img width=100px height=100px src='+status.playerRightAvatar+'>'}).appendTo($leftAv);
-		$('<h2>',{html: '<img width=100px height=100px src='+status.playerRightAvatar+'>'}).appendTo($rightAv);
+		$('<h2>',{html: '<img src="'+status.playerLeftAvatar+'" width="100" height="100">'}).appendTo($leftAv);
 		$('<h2>',{html: status.playerRightName}).appendTo($rightName);
+		$('<h2>',{html: '<img src="'+status.playerRightAvatar+'" width="100" height="100">'}).appendTo($rightAv);
 	});
 
 	socket.on('allowJoin', function () {
 		var username = prompt("Wpisz swoją ksywkę:");
 		username = username ? username : "Ktokolwiek";
-		socket.emit('join', username);
+		var avatar = prompt("Podaj link do avataru:");
+		avatar = avatar ? avatar : "http://i40.tinypic.com/2u760rk.jpg";
+		socket.emit('join', username, avatar);
 	});
 
 	socket.on('updatePlayers', function (status) {
 		$leftName.empty();
 		$rightName.empty();
+		$leftAv.empty();
+		$rightAv.empty();
 		if (status.playerLeftName !== null) {
 			$('<h2>',{html: status.playerLeftName}).appendTo($leftName);
-			$('<h2>',{html: '<img width=100px height=100px src='+status.playerLeftAvatar+'>'}).appendTo($leftAv);
+			$('<h2>',{html: '<img src="'+status.playerLeftAvatar+'" width="100" height="100">'}).appendTo($leftAv);
 		}
 		else {
 			$('<h2>',{html: 'Empty'}).appendTo($leftName);
-			$('<h2>',{html: '<img width=100px height=100px src='+status.playerRightAvatar+'>'}).appendTo($leftAv);
 		}
 		if (status.playerRightName !== null) {
 			$('<h2>',{html: status.playerRightName}).appendTo($rightName);
-			$('<h2>',{html: '<img width=100px height=100px src='+status.playerRightAvatar+'>'}).appendTo($rightAv);
+			$('<h2>',{html: '<img src="'+status.playerRightAvatar+'" width="100" height="100">'}).appendTo($rightAv);
 		}
 		else {
 			$('<h2>',{html: 'Empty'}).appendTo($rightName);
-			$('<h2>',{html: '<img width=100px height=100px src='+status.playerRightAvatar+'>'}).appendTo($rightAv);
 		}
 	});
-	//odświeżanie akcji
 	socket.on('updateSteps', function (status) {
 		$leftStep.empty();
 		$rightStep.empty();

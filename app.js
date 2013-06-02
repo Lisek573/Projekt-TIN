@@ -72,10 +72,10 @@ app.post('/', function (req, res) {
     playerRightName   : null,
     playerLeftAction  : 0,
 	playerLeftAllow  : 0,
-	playerLeftAvatar : 'http://i40.tinypic.com/2u760rk.jpg',
+	playerLeftAvatar : null,
 	playerRightAllow  : 0,
     playerRightAction : 0,
-	playerRightAvatar : 'http://i40.tinypic.com/2rgm8uc.jpg'
+	playerRightAvatar : null
   };
   res.redirect('/game');
 });
@@ -92,13 +92,20 @@ io.sockets.on('connection', function (client) {
     client.emit('allowJoin');
   }
 
-  client.on('join', function (username) {
+  client.on('join', function (username, avatar) {
       client.set('username', username);
       if (status.playerLeftName === null) {
         status.playerLeftName = username;
       }
       else {
           status.playerRightName = username;
+      }
+	  client.set('avatar', avatar);
+      if (status.playerLeftAvatar === null) {
+        status.playerLeftAvatar = avatar;
+      }
+      else {
+          status.playerRightAvatar = avatar;
       }
       client.emit('updatePlayers', status);
       client.broadcast.emit('updatePlayers', status);
