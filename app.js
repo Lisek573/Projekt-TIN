@@ -107,6 +107,8 @@ io.sockets.on('connection', function (client) {
       if (status.playerLeftName !== null && status.playerRightName !== null){
       client.emit('updateSteps', status);
       client.broadcast.emit('updateSteps', status);
+	  client.emit('updateSteps2', status);
+      client.broadcast.emit('updateSteps2', status);
     }
     });
 
@@ -132,7 +134,23 @@ io.sockets.on('connection', function (client) {
     });
   });
    
-  client.on('next-allow', function () {
+    client.on('next', function () {
+    client.get('username', function (err, username) {
+      if (status !== null && status.playerLeftName !== null && status.playerRightName !== null){
+     //console.log(username);
+     if (status.playerLeftName === username) {
+      status.playerLeftAllow = 1;
+     }
+     else if (status.playerRightName === username) {
+      status.playerRightAllow = 1;
+     }
+      client.emit('updateSteps', status);
+      client.broadcast.emit('updateSteps', status);
+    }
+    });
+  });
+  
+    client.on('next-allow', function () {
     client.get('username', function (err, username) {
       if (status !== null && status.playerLeftName !== null && status.playerRightName !== null){
      //console.log(username);
@@ -144,22 +162,6 @@ io.sockets.on('connection', function (client) {
      else if (status.playerRightName === username && status.playerLeftAllow === 1) {
       status.playerLeftAction++;
 	  status.playerLeftAllow = 0;
-     }
-      client.emit('updateSteps2', status);
-      client.broadcast.emit('updateSteps2', status);
-    }
-    });
-	});
-  
-    client.on('next', function () {
-    client.get('username', function (err, username) {
-      if (status !== null && status.playerLeftName !== null && status.playerRightName !== null){
-     //console.log(username);
-     if (status.playerLeftName === username) {
-      status.playerLeftAllow = 1;
-     }
-     else if (status.playerRightName === username) {
-      status.playerRightAllow = 1;
      }
       client.emit('updateSteps', status);
       client.broadcast.emit('updateSteps', status);

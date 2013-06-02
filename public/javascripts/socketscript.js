@@ -74,5 +74,9 @@
 	$('#next').on('click', function () {
 		socket.emit('next');
 	});
+	
+	$('#next-allow').on('click', function () {
+		socket.emit('next-allow');
+	});
 
 })();
