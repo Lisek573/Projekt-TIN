@@ -36,7 +36,8 @@
 
 	socket.on('allowJoin', function () {
 		var username = prompt("Wpisz swoją ksywkę:");
-		username = username ? username : "Ktokolwiek";
+		var randomnumber=Math.floor(Math.random()*100001)
+		username = username ? username : "Gość"+randomnumber;
 		var avatar = prompt("Podaj link do avataru:");
 		avatar = avatar ? avatar : "http://i40.tinypic.com/2u760rk.jpg";
 		socket.emit('join', username, avatar);
@@ -47,6 +48,10 @@
 		$rightName.empty();
 		$leftAv.empty();
 		$rightAv.empty();
+				
+		if (status.playerLeftName === status.playerRightName){
+		status.playerRightName = status.playerLeftName+"(2)";
+		}
 				
 		if (status.playerLeftName !== null) {
 			$('<h2>',{html: status.playerLeftName}).appendTo($leftName);
