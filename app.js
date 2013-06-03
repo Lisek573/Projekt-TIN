@@ -121,10 +121,16 @@ io.sockets.on('connection', function (client) {
      if (username !== 'spectator'){
      if (status.playerLeftName === username) {
       status.playerLeftName = null;
+	  status.playerLeftAction = 0;
+	  status.playerLeftAllow = 0;
+	  status.playerLeftAvatar = null;
      }
 
      if (status.playerRightName === username) {
       status.playerRightName = null;
+	  status.playerRightAction = 0;
+	  status.playerRightAllow = 0;
+	  status.playerRightAvatar = null;
      }
 
      if (status.playerLeftName === null && status.playerRightName === null) {
