@@ -169,4 +169,21 @@ io.sockets.on('connection', function (client) {
     }
     });
   });
+  
+   client.on('next-disallow', function () {
+    client.get('username', function (err, username) {
+      if (status !== null && status.playerLeftName !== null && status.playerRightName !== null){
+     //console.log(username);
+     if (status.playerLeftName === username && status.playerRightAllow === 1) {
+	  status.playerRightAllow = 0;
+     }
+	 
+     else if (status.playerRightName === username && status.playerLeftAllow === 1) {
+	  status.playerLeftAllow = 0;
+     }
+      client.emit('updateSteps', status);
+      client.broadcast.emit('updateSteps', status);
+    }
+    });
+  });
 });

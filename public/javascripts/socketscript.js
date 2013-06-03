@@ -135,4 +135,8 @@
 	$('#next-allow').on('click', function () {
 		socket.emit('next-allow');
 	});
+	
+	$('#next-disallow').on('click', function () {
+		socket.emit('next-disallow');
+	});
 })();
