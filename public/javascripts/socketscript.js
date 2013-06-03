@@ -11,6 +11,8 @@
 		$rightAv = $('#playerRightAvatar'),
 		$leftStep = $('#stepLeft'),
 		$rightStep = $('#stepRight'),
+		$leftOczek = $('#oczekLeft'),
+		$rightOczek = $('#oczekRight'),
 		$button = $('#button'),
 		$button2 = $('#button2');
 
@@ -20,6 +22,8 @@
 		$rightName.empty();
 		$leftAv.empty();
 		$rightAv.empty();
+		$leftOczek.empty();
+		$rightOczek.empty();
 		$button.empty();
 		$button2.empty();
 
@@ -43,8 +47,10 @@
 		$rightName.empty();
 		$leftAv.empty();
 		$rightAv.empty();
+				
 		if (status.playerLeftName !== null) {
 			$('<h2>',{html: status.playerLeftName}).appendTo($leftName);
+			//$('<h2>',{html: status.playerLeftAllow}).appendTo($leftOczek);
 			$('<h2>',{html: '<img src="'+status.playerLeftAvatar+'" width="100" height="100">'}).appendTo($leftAv);
 		}
 		else {
@@ -52,6 +58,7 @@
 		}
 		if (status.playerRightName !== null) {
 			$('<h2>',{html: status.playerRightName}).appendTo($rightName);
+			//$('<h2>',{html: status.playerRightAllow}).appendTo($rightOczek);
 			$('<h2>',{html: '<img src="'+status.playerRightAvatar+'" width="100" height="100">'}).appendTo($rightAv);
 		}
 		else {
@@ -61,6 +68,24 @@
 	socket.on('updateSteps', function (status) {
 		$leftStep.empty();
 		$rightStep.empty();
+		$leftOczek.empty();
+		$rightOczek.empty();
+		
+		if (status.playerLeftAllow === 1){
+			$leftOczek.empty();
+			$('<h2>',{html: 'OCZEKUJE NA AKCEPTACJE'}).appendTo($leftOczek);
+		}
+		else{
+		$leftOczek.empty();
+		}
+		
+		if (status.playerRightAllow === 1){
+			$rightOczek.empty();
+			$('<h2>',{html: 'OCZEKUJE NA AKCEPTACJE'}).appendTo($rightOczek);
+		}
+		else{
+		$rightOczek.empty();
+		}
 		// $button2.empty();
 			
 		/*if (status.playerLeftAllow === 1){
