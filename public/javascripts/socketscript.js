@@ -14,6 +14,7 @@
 		$leftOczek = $('#oczekLeft'),
 		$rightOczek = $('#oczekRight'),
 		$button = $('#button'),
+		$tresc = $('#tresc'),
 		$button2 = $('#button2');
 
 	socket.on('playersLimit', function (status) {
@@ -48,11 +49,7 @@
 		$rightName.empty();
 		$leftAv.empty();
 		$rightAv.empty();
-				
-		if (status.playerLeftName === status.playerRightName){
-		status.playerRightName = status.playerLeftName+"(2)";
-		}
-				
+			
 		if (status.playerLeftName !== null) {
 			$('<h2>',{html: status.playerLeftName}).appendTo($leftName);
 			//$('<h2>',{html: status.playerLeftAllow}).appendTo($leftOczek);
@@ -91,23 +88,6 @@
 		else{
 		$rightOczek.empty();
 		}
-		// $button2.empty();
-			
-		/*if (status.playerLeftAllow === 1){
-			$('<h2>',{html: ' <center><button id="next-allow" class="btn btn-success btn-large">Zezwól na następny ruch graczowi 1</button></center>'}).appendTo($button2);
-		}
-		
-		if (status.playerRightAllow === 1){
-			$('<h2>',{html: ' <center><button id="next-allow" class="btn btn-warning btn-large">Zezwól na następny ruch graczowi 2</button></center>'}).appendTo($button2);
-		}
-		
-		if (status.playerLeftAllow === 0){
-			$('<h2>',{html: ''}).appendTo($button2);
-		}
-		
-		if (status.playerRightAllow === 0){
-			$('<h2>',{html: ''}).appendTo($button2);
-		}*/
 		
 		if (status.playerLeftName !== null) {
 			if (status.actions[status.playerLeftAction] !== undefined) {

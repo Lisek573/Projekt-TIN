@@ -25,7 +25,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
 .P1 {
 text-align:center;
-min-height:20px;
+min-height:270px;
 margin-bottom:20px;
 background: #f0f9ff; /* Old browsers */
 background: -moz-linear-gradient(top,  #f0f9ff 0%, #cbebff 47%, #a1dbff 100%); /* FF3.6+ */
@@ -47,7 +47,7 @@ padding:19px;
 
 .P2 {
 text-align:center;
-min-height:20px;
+min-height:270px;
 margin-bottom:20px;
 background: #fff2f3; /* Old browsers */
 background: -moz-linear-gradient(top,  #fff2f3 0%, #ffccda 47%, #ffa3bd 100%); /* FF3.6+ */

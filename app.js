@@ -98,6 +98,10 @@ io.sockets.on('connection', function (client) {
         status.playerLeftName = username;
       }
       else {
+	  	if (status.playerLeftName === username){
+			username = username+' (2)';
+			client.set('username', username);
+		}
           status.playerRightName = username;
       }
 	  client.set('avatar', avatar);
