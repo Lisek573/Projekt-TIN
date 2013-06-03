@@ -134,7 +134,7 @@ io.sockets.on('connection', function (client) {
     }
     });
   });
-   
+    
     client.on('next', function () {
     client.get('username', function (err, username) {
       if (status !== null && status.playerLeftName !== null && status.playerRightName !== null){
