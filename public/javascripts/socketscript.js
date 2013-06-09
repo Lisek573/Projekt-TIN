@@ -51,7 +51,6 @@
 			
 		if (status.playerLeftName !== null) {
 			$('<h2>',{html: status.playerLeftName}).appendTo($leftName);
-			//$('<h2>',{html: status.playerLeftAllow}).appendTo($leftOczek);
 			$('<h2>',{html: '<img src="'+status.playerLeftAvatar+'" width="100" height="100">'}).appendTo($leftAv);
 		}
 		else {
@@ -59,7 +58,6 @@
 		}
 		if (status.playerRightName !== null) {
 			$('<h2>',{html: status.playerRightName}).appendTo($rightName);
-			//$('<h2>',{html: status.playerRightAllow}).appendTo($rightOczek);
 			$('<h2>',{html: '<img src="'+status.playerRightAvatar+'" width="100" height="100">'}).appendTo($rightAv);
 		}
 		else {
@@ -70,7 +68,7 @@
 	});
 
 	  socket.on('updatechat', function (username, data) {
-    $('#tresc').append('<b>'+username+ ':</b> ' + data + '<br>');
+    $('#tresc').prepend('<b>'+username+ ':</b> ' + data + '<br>');
   	});
 
 	socket.on('updateSteps', function (status) {
@@ -129,7 +127,7 @@
 	 $('#datasend').on('click', function() {
       	var message = $('#data').val();
       	$('#data').val('');
-     	 socket.emit('sendchat',username, message);
+     	 socket.emit('sendchat', username, message);
    		 });
 
    		$('#data').keypress(function(e) {
