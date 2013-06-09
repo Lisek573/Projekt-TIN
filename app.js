@@ -147,6 +147,7 @@ io.sockets.on('connection', function (client) {
       status = null;
      }
       client.broadcast.emit('updatePlayers', status);
+      client.broadcast.emit('updatechat', 'SERVER',username + ' has disconnected');
     }
     });
   });
@@ -165,6 +166,11 @@ io.sockets.on('connection', function (client) {
       client.broadcast.emit('updateSteps', status);
     }
     });
+  });
+
+  client.on('sendchat', function (username, message) {
+  client.emit('updatechat',username, message);
+  client.broadcast.emit('updatechat',username, message);
   });
   
     client.on('next-allow', function () {

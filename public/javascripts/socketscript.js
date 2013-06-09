@@ -2,9 +2,8 @@
 /*global io:true */
 'use strict';
 (function () {
-
+	var username;
 	var socket = io.connect('http://localhost');
-
 		var $leftName = $('#playerLeftName'),
 		$rightName = $('#playerRightName'),
 		$leftAv = $('#playerLeftAvatar'),
@@ -36,7 +35,7 @@
 	});
 
 	socket.on('allowJoin', function () {
-		var username = prompt("Wpisz swoją ksywkę:");
+		username = prompt("Wpisz swoją ksywkę:");
 		var randomnumber=Math.floor(Math.random()*100001)
 		username = username ? username : "Gość"+randomnumber;
 		var avatar = prompt("Podaj link do avataru:");
@@ -66,7 +65,14 @@
 		else {
 			$('<h2>',{html: 'Empty'}).appendTo($rightName);
 		}
+
+
 	});
+
+	  socket.on('updatechat', function (username, data) {
+    $('#tresc').append('<b>'+username+ ':</b> ' + data + '<br>');
+  	});
+
 	socket.on('updateSteps', function (status) {
 		$leftStep.empty();
 		$rightStep.empty();
@@ -119,4 +125,19 @@
 	$('#next-disallow').on('click', function () {
 		socket.emit('next-disallow');
 	});
+
+	 $('#datasend').on('click', function() {
+      	var message = $('#data').val();
+      	$('#data').val('');
+     	 socket.emit('sendchat',username, message);
+   		 });
+
+   		$('#data').keypress(function(e) {
+      	if(e.which == 13) {
+        $(this).blur();
+        $('#datasend').focus().click();
+      	}
+ 		});
+
+
 })();
